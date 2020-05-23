@@ -1,0 +1,102 @@
+// Navbar Colors
+$bright-cerulean : #26a8e0;
+$bright-navy-blue : #1b75bb;
+$gargoyle-gas : #fee74c;
+$tennessee-orange: #f17105;
+$jet-black : #333333;
+$outer-space : #484848;
+$granite-gray : #666666;
+$isabelline : #eaeaea;
+$white-smoke : #f4f6f7;
+$img-background : #fafafa;
+
+
+$color-black      : #000000;
+$color-white      : #ffffff;
+
+
+//  BORDERS
+
+$border-gray-1: #e4e4e4;
+$border-gray-2: #e6e6e6;
+$text_error_color: #f87272;
+
+/* MIXIN : MEDIA QUERIES
+ *    EX : @include mq( 'lap-and-up' ) { CODE }
+ * ------------------------------------------------------------------------- */
+$phone:            "screen and (max-width: 767px)";
+$tablet:           "screen and (min-width: 768px) and (max-width: 1023px)";
+$phone-and-tablet: "screen and (max-width: 1023px)";
+$tablet-and-up:    "screen and (min-width: 768px)";
+$tablet-portrait:  "screen and (min-width: 768px) and (max-width: 959px)";
+$tablet-landscape: "screen and (min-width: 960px) and (max-width: 1023px)";
+$lap:              "screen and (min-width: 1024px) and (max-width: 1219px)";
+$lap-and-up:       "screen and (min-width: 1024px)";
+$desk-and-up:      "screen and (min-width: 1220px)";
+$lap-and-desk:     "screen and (min-width: 1024px) and (max-width: 1679px)";
+$wide-and-up:      "screen and (min-width: 1680px)";
+$retina:           "(-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi)";
+
+@mixin mq($alias) {
+  @if $alias == "phone" {
+    @media #{$phone} {
+      @content;
+    }
+  } @else if $alias == "tablet" {
+    @media #{$tablet} {
+      @content;
+    }
+  } @else if $alias == "phone-and-tablet" {
+    @media #{$phone-and-tablet} {
+      @content;
+    }
+  } @else if $alias == "tablet-and-up" {
+    @media #{$tablet-and-up} {
+      @content;
+    }
+  } @else if $alias == "tablet-portrait" {
+    @media #{$tablet-portrait} {
+      @content;
+    }
+  } @else if $alias == "tablet-landscape" {
+    @media #{$tablet-landscape} {
+      @content;
+    }
+  } @else if $alias == "lap" {
+    @media #{$lap} {
+      @content;
+    }
+  } @else if $alias == "lap-and-up" {
+    @media #{$lap-and-up} {
+      @content;
+    }
+  } @else if $alias == "desk-and-up" {
+    @media #{$desk-and-up} {
+      @content;
+    }
+  } @else if $alias == "lap-and-desk" {
+    @media #{$lap-and-desk} {
+      @content;
+    }
+  } @else if $alias == "wide-and-up" {
+    @media #{$wide-and-up} {
+      @content;
+    }
+  } @else if $alias == "retina" {
+    @media #{$retina} {
+      @content;
+    }
+  }
+}
+
+//  FONT FAMILY
+
+$heading-font: 'Roboto Slab', serif;
+$body-font   :    'Roboto Slab', serif;
+
+$font-light     : 300;
+$font-regular   : 400;
+$font-medium    : 500;
+$font-semi-bold : 700;
+$font-bold      : 800;
+$font-extra-bold: 900;
