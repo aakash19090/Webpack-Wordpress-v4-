@@ -18,7 +18,7 @@ const BrowserSyncPlugin      = require('browser-sync-webpack-plugin');
 
 // BrowserSync Settings 
 const port       = 3000;
-const theme_name = "webpack-wordpress";
+const proj_name = "webpack-wordpress";
 
 
 // Placeholders to prevent caching of css
@@ -43,10 +43,6 @@ var config = {
         path: path.resolve(__dirname),
         filename: './bundle.[contenthash:4].min.js'
     },
-
-    // Will produce .css.map & .js.map  sourcemap  files
-    // devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map', 
-    // devtool: 'inline-source-map',
 
     // Rules to test For each JS & CSS module respectively
     module: {
@@ -95,7 +91,7 @@ var config = {
 
         // To Watch changes in files & Reload using BrowserSync
         new BrowserSyncPlugin({
-		    proxy: `localhost/${theme_name}`,
+		    proxy: `localhost/${proj_name}`,
 		    port: port,
 		    files: [
 		        '**/*.php'
@@ -127,10 +123,12 @@ var config = {
 module.exports = (env, argv) => {
 
     if (argv.mode === 'development') {
+        // Will produce .css.map & .js.map  sourcemap  files
         config.devtool = 'inline-source-map';
     }
 
     if (argv.mode === 'production') {
+        // Will produce .css.map & .js.map  sourcemap  files
         config.devtool = false;
     }
 
