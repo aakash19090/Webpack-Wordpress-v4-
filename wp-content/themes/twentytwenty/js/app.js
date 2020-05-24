@@ -1,2 +1,2 @@
-import section from './section.js';
+import './section.js';
 import scss from '../scss/app.scss';
