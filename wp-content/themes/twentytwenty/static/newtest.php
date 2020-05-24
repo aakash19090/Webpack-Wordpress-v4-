@@ -28,9 +28,9 @@
     ?>
 </head>
 <body>
-    <div id="teasdthdd  st_page">
+    <div id="test_page">
         <div class="container">
-            <p>NEW TEST</p>
+            <h3>Testing Servers</h3>
         </div>
     </div>
 

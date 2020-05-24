@@ -13,6 +13,14 @@ const HtmlWebpackPlugin      = require('html-webpack-plugin');
 // installed via npm To extract the CSS file seperately from JS file (app.js here)
 const MiniCssExtractPlugin   = require("mini-css-extract-plugin");
 
+// installed via npm To Live reload changes using Browsersync
+const BrowserSyncPlugin      = require('browser-sync-webpack-plugin');
+
+// BrowserSync Settings 
+const port       = 3000;
+const theme_name = "webpack-wordpress";
+
+
 // Placeholders to prevent caching of css
 //   Note: We must normally use [contenthash] as a placeholder.
 /** 
@@ -24,7 +32,8 @@ const MiniCssExtractPlugin   = require("mini-css-extract-plugin");
  * [chunkhash]
 */
 
-module.exports ={
+
+var config = {
 
     // Defines Entry point from where Webpack will start bundling JS
     entry:['./js/app.js', './scss/app.scss'],
@@ -35,8 +44,9 @@ module.exports ={
         filename: './bundle.[contenthash:4].min.js'
     },
 
-    // Will produce .css.map & .js.map  sourcemap  files 
-    devtool: 'inline-source-map',
+    // Will produce .css.map & .js.map  sourcemap  files
+    // devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map', 
+    // devtool: 'inline-source-map',
 
     // Rules to test For each JS & CSS module respectively
     module: {
@@ -83,6 +93,22 @@ module.exports ={
 
         }),
 
+        // To Watch changes in files & Reload using BrowserSync
+        new BrowserSyncPlugin({
+		    proxy: `localhost/${theme_name}`,
+		    port: port,
+		    files: [
+		        '**/*.php'
+		    ],
+		    ghostMode: false,
+		    injectChanges: true,
+		    logFileChanges: true,
+		    logLevel: 'debug',
+		    logPrefix: 'wepback',
+		    notify: true,
+		    reloadDelay: 0
+		})
+
         // To create HTML files & Templates with dynamically included Hashed CSS & JS files
 
         // new HtmlWebpackPlugin({
@@ -97,3 +123,16 @@ module.exports ={
     ]
 
 }
+
+module.exports = (env, argv) => {
+
+    if (argv.mode === 'development') {
+        config.devtool = 'inline-source-map';
+    }
+
+    if (argv.mode === 'production') {
+        config.devtool = false;
+    }
+
+    return config;
+};
