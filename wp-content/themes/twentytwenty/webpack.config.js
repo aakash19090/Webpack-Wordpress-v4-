@@ -1,14 +1,20 @@
-var webpack = require('webpack');
-var path = require('path');
-var { CleanWebpackPlugin } = require('clean-webpack-plugin'); // installed via npm
-var HtmlWebpackPlugin = require('html-webpack-plugin'); // installed  via npm To generate HTML files with dynamic hashed css & js
+//  To include Webpack
+const webpack                = require('webpack');
 
-// include the css extraction and minification plugins
-var MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+// To resolve paths to directories
+const path                   = require('path');
+
+// installed via npm To Delete old CSS & JS before build if any changes found.
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); 
+
+// installed  via npm To generate HTML files with dynamic hashed css & js
+const HtmlWebpackPlugin      = require('html-webpack-plugin'); 
+
+// installed via npm To extract the CSS file seperately from JS file (app.js here)
+const MiniCssExtractPlugin   = require("mini-css-extract-plugin");
 
 // Placeholders to prevent caching of css
-
+//   Note: We must normally use [contenthash] as a placeholder.
 /** 
  * [hash]
  * [name]
@@ -20,14 +26,22 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports ={
 
+    // Defines Entry point from where Webpack will start bundling JS
     entry:['./js/app.js', './scss/app.scss'],
+    
+    // Defines Exit Point to where Webpack produces Bundled Output. Will be same for CSS.
     output:{
         path: path.resolve(__dirname),
-        filename: "./app.[contenthash:4].min.js"
+        filename: './bundle.[contenthash:4].min.js'
     },
+
+    // Will produce .css.map & .js.map  sourcemap  files 
+    devtool: 'inline-source-map',
+
+    // Rules to test For each JS & CSS module respectively
     module: {
         rules: [
-        // compile all .scss files to plain old css
+            // Test & Compile for all .scss/.sass/.css files
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
@@ -42,17 +56,35 @@ module.exports ={
                 "css-loader",
                 "sass-loader"
                 ]
+            },
+
+            // Test & Compile all ES6 JS through Babel for old browsers
+            {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader'
+                }
             }
         ]
     },
+    
+    // Setting Configuration of plugins used
     plugins: [
+
+        // To Extract CSS file seperately from the JS entrypoint
         new MiniCssExtractPlugin({
-            filename: './app.[contenthash:4].min.css'
+            filename: './bundle.[contenthash:4].min.css'
         }),
+
+        // To clean old JS & CSS files before new build if anything changes
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['./*.min.js','./*.min.css']
+            cleanOnceBeforeBuildPatterns: ['./bundle.*.min.js','./bundle.*.min.css']
 
         }),
+
+        // To create HTML files & Templates with dynamically included Hashed CSS & JS files
+
         // new HtmlWebpackPlugin({
         //     title : 'Default HTML',
         //     filename :  './html/index.html'
@@ -63,4 +95,5 @@ module.exports ={
         // })
 
     ]
+
 }
